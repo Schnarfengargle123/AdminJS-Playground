@@ -1,1 +1,1 @@
-* AdminJS Playground
+*AdminJS Playground
