@@ -1,0 +1,21 @@
+Ideally, you want to create a test user when you access a database in development.
+
+Firstly, install PostgreSQL via Homebrew (if using a Mac)
+
+PostgresSQL Login Command: `psql -u postgres` 
+    (If this is your first login, you will likely be prompted to enter a new password for the default `postgres` user)
+
+Once you gain access to postgres, create a new database called "adminjs_panel": `CREATE DATABASE adminjs_panel`
+
+Use `\l` to list all of your databases.
+
+Now, create a new test user: `CREATE USER mr_bean1 WITH PASSWORD 'password'`
+
+Use CMD + D\Ctrl + D, to exit postgres, i.e, logout out of postgres.
+
+Now, login with the newly created test user: `psql -U mr_bean1 -d adminjs_panel` 
+    (
+        `-d`, specifies a database. We must specify a database in order to login. If left unspecified, a database matching the username,
+         is used. An error will occur, if no database matching the username is found, thus preventing us from logging in. 
+    )
+

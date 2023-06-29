@@ -1,9 +1,11 @@
 import AdminJS from 'adminjs';
+import {Adapter, Resource, Database} from '@adminjs/sql';
 import AdminJSExpress from '@adminjs/express';
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 
 const PORT = 8000;
+const app = express();
 dotenv.config();
 
 const DEFAULT_ADMIN = {
@@ -11,12 +13,27 @@ const DEFAULT_ADMIN = {
     password: process.env.DEFAULT_ADMIN_PASSWORD
 }
 
-const start = async () => {
-  const app = express();
+AdminJS.registerAdapter({Database, Resource});
 
-  const admin = new AdminJS({});
+const start = async () => {
+  const db = await new Adapter('postgresql', {
+    connectionString: 'postgres://adminjs:adminjs@localhost:5432/adminjs_panel',
+    database: 'adminjs_panel'
+  }).init();
+
+  const admin = new AdminJS({
+    resources: [
+      {
+        resource: db.table('users'),
+        options: {}
+      }
+    ]
+  });
+
+  admin.watch();
 
   const adminRouter = AdminJSExpress.buildRouter(admin);
+
   app.use(admin.options.rootPath, adminRouter);
 
   app.use(express.json());

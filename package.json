@@ -14,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "@adminjs/express": "^6.0.0",
+    "@adminjs/sql": "^2.1.0",
     "adminjs": "^7.0.8",
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
