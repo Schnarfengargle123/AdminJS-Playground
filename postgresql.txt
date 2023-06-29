@@ -19,3 +19,11 @@ Now, login with the newly created test user: `psql -U mr_bean1 -d adminjs_panel`
          is used. An error will occur, if no database matching the username is found, thus preventing us from logging in. 
     )
 
+Now, create the Users table. 
+`CREATE TABLE users (id SERIAL PRIMARY KEY NOT NULL, email VARCHAR NOT NULL, password VARCHAR NOT NULL, registered BOOLEAN DEFAULT false NOT NULL)`
+
+And, insert a row/record.
+    `INSERT INTO users (email, password) VALUES('mr_bean1@email.com', 'password');`
+
+Finally, list all records within the users table.
+    `SELECT * FROM users;`

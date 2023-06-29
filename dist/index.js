@@ -8,18 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import AdminJS from 'adminjs';
+import { Adapter, Resource, Database } from '@adminjs/sql';
 import AdminJSExpress from '@adminjs/express';
 import express from 'express';
 import dotenv from 'dotenv';
 const PORT = 8000;
+const app = express();
 dotenv.config();
 const DEFAULT_ADMIN = {
     email: process.env.DEFAULT_ADMIN_EMAIL,
     password: process.env.DEFAULT_ADMIN_PASSWORD
 };
+AdminJS.registerAdapter({ Database, Resource });
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    const app = express();
-    const admin = new AdminJS({});
+    const db = yield new Adapter('postgresql', {
+        connectionString: 'postgres://mr_bean1:password@localhost:5432/adminjs_panel',
+        database: 'adminjs_panel'
+    }).init();
+    const admin = new AdminJS({
+        resources: [
+            {
+                resource: db.table('users'),
+                options: {}
+            }
+        ]
+    });
+    admin.watch();
     const adminRouter = AdminJSExpress.buildRouter(admin);
     app.use(admin.options.rootPath, adminRouter);
     app.use(express.json());

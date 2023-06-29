@@ -17,7 +17,7 @@ AdminJS.registerAdapter({Database, Resource});
 
 const start = async () => {
   const db = await new Adapter('postgresql', {
-    connectionString: 'postgres://adminjs:adminjs@localhost:5432/adminjs_panel',
+    connectionString: 'postgres://mr_bean1:password@localhost:5432/adminjs_panel',
     database: 'adminjs_panel'
   }).init();
 
